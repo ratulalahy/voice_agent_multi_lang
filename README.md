@@ -1,4 +1,4 @@
-# 🏠 Elite Realty - AI Voice Agent Platform
+# 🏠 DataMindLabs - AI Voice Agent Platform
 
 A professional real estate agency admin platform featuring AI-powered voice agents for customer service, property inquiries, and appointment scheduling.
 
@@ -84,4 +84,4 @@ A professional real estate agency admin platform featuring AI-powered voice agen
 
 ---
 
-**Elite Realty AI Voice Agent Platform** - Transforming real estate customer service with AI-powered voice technology.
+**DataMindLabs AI Voice Agent Platform** - Transforming real estate customer service with AI-powered voice technology.

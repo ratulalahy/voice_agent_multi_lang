@@ -38,7 +38,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard-sidebar">
       <div className="dashboard-header">
-        <h2>🏠 Elite Realty Hub</h2>
+        <h2>🏠 DataMindLabs Hub</h2>
         <p>AI Agent Dashboard</p>
       </div>
 

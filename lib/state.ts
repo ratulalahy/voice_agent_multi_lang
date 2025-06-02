@@ -3,7 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import { create } from 'zustand';
-import { Agent, PropertyExpert, CommercialSpecialist, RentalAssistant, LuxuryAgent } from './presets/agents';
+import { 
+  Agent, 
+  PropertyExpert, 
+  CommercialSpecialist, 
+  RentalAssistant, 
+  LuxuryAgent,
+  InvestmentAdvisor,
+  FirstTimeBuyerGuide,
+  RelocationSpecialist,
+  CoastalExpert,
+  DesignConsultant,
+  RapidResponseAgent,
+  FamilyAdvisor,
+  BusinessBroker,
+  MotivationalSpeaker,
+  TechSavvyAgent,
+  WhisperingAgent,
+  DramaticAgent,
+  CalmMeditativeAgent,
+  RapperAgent,
+  SouthernCharmAgent,
+  ScientificAgent
+} from './presets/agents';
 
 /**
  * User
@@ -45,7 +67,28 @@ export const useAgent = create<{
   update: (agentId: string, adjustments: Partial<Agent>) => void;
 }>(set => ({
   current: PropertyExpert,
-  availablePresets: [PropertyExpert, CommercialSpecialist, RentalAssistant, LuxuryAgent],
+  availablePresets: [
+    PropertyExpert, 
+    CommercialSpecialist, 
+    RentalAssistant, 
+    LuxuryAgent,
+    InvestmentAdvisor,
+    FirstTimeBuyerGuide,
+    RelocationSpecialist,
+    CoastalExpert,
+    DesignConsultant,
+    RapidResponseAgent,
+    FamilyAdvisor,
+    BusinessBroker,
+    MotivationalSpeaker,
+    TechSavvyAgent,
+    WhisperingAgent,
+    DramaticAgent,
+    CalmMeditativeAgent,
+    RapperAgent,
+    SouthernCharmAgent,
+    ScientificAgent
+  ],
   availablePersonal: [],
 
   addAgent: (agent: Agent) => {
@@ -75,12 +118,18 @@ export const useAgent = create<{
 /**
  * UI
  */
+export type PageType = 'main' | 'components' | 'agents';
+
 export const useUI = create<{
+  currentPage: PageType;
+  setCurrentPage: (page: PageType) => void;
   showUserConfig: boolean;
   setShowUserConfig: (show: boolean) => void;
   showAgentEdit: boolean;
   setShowAgentEdit: (show: boolean) => void;
 }>(set => ({
+  currentPage: 'main',
+  setCurrentPage: (page: PageType) => set({ currentPage: page }),
   showUserConfig: false,
   setShowUserConfig: (show: boolean) => set({ showUserConfig: show }),
   showAgentEdit: false,

@@ -39,7 +39,7 @@ export default function Header() {
         <div className="brand-section">
           <div className="brand-logo">🏠</div>
           <div className="brand-info">
-            <h1 className="brand-title">Elite Realty</h1>
+            <h1 className="brand-title">DataMindLabs</h1>
             <p className="brand-subtitle">AI Voice Agent Platform</p>
           </div>
         </div>
