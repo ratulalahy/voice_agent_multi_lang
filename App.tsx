@@ -22,6 +22,7 @@ import AgentEdit from './components/AgentEdit';
 import ControlTray from './components/console/control-tray/ControlTray';
 import ErrorScreen from './components/demo/ErrorSreen';
 import KeynoteCompanion from './components/demo/keynote-companion/KeynoteCompanion';
+import ConversationTranscript from './components/conversation/ConversationTranscript';
 import Header from './components/Header';
 import UserSettings from './components/UserSettings';
 import Dashboard from './components/Dashboard.tsx';
@@ -51,13 +52,16 @@ function App() {
         {showAgentEdit && <AgentEdit />}
         
         <div className="admin-layout">
-          <Dashboard />
           <div className="main-content">
-            <div className="voice-agent-section">
-              <KeynoteCompanion />
+            <div className="conversation-area">
+              <ConversationTranscript />
+              <div className="voice-agent-section">
+                <KeynoteCompanion />
+                <ControlTray />
+              </div>
             </div>
-            <ControlTray />
           </div>
+          <Dashboard />
         </div>
       </LiveAPIProvider>
     </div>
