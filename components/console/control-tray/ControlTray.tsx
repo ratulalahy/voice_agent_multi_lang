@@ -33,10 +33,12 @@ export type ControlTrayProps = {
 function ControlTray({ children }: ControlTrayProps) {
   const [audioRecorder] = useState(() => new AudioRecorder());
   const [muted, setMuted] = useState(false);
+  const [userVolume, setUserVolume] = useState(0);
+  const [isDisconnecting, setIsDisconnecting] = useState(false);
   const connectButtonRef = useRef<HTMLButtonElement>(null);
 
   const { showAgentEdit, showUserConfig } = useUI();
-  const { client, connected, connect, disconnect } = useLiveAPIContext();
+  const { client, connected, connect, disconnect, volume: agentVolume } = useLiveAPIContext();
 
   // Stop the current agent if the user is editing the agent or user config
   useEffect(() => {
@@ -60,46 +62,96 @@ function ControlTray({ children }: ControlTrayProps) {
         },
       ]);
     };
+
+    const onVolume = (volume: number) => {
+      setUserVolume(volume);
+    };
+
     if (connected && !muted && audioRecorder) {
-      audioRecorder.on('data', onData).start();
+      audioRecorder.on('data', onData).on('volume', onVolume).start();
     } else {
       audioRecorder.stop();
     }
     return () => {
-      audioRecorder.off('data', onData);
+      audioRecorder.off('data', onData).off('volume', onVolume);
     };
   }, [connected, client, muted, audioRecorder]);
 
+  // Reset disconnecting state when connection state changes
+  useEffect(() => {
+    if (!connected && isDisconnecting) {
+      const timer = setTimeout(() => setIsDisconnecting(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [connected, isDisconnecting]);
+
+  const handleAgentToggle = async () => {
+    if (isDisconnecting) return; // Prevent multiple clicks during disconnect
+    
+    if (connected) {
+      setIsDisconnecting(true);
+      try {
+        // Force disconnect immediately
+        disconnect();
+        // Also stop audio recorder if it's running
+        if (audioRecorder) {
+          audioRecorder.stop();
+        }
+      } catch (error) {
+        console.error('Error during disconnect:', error);
+      } finally {
+        // Reset the disconnecting state after a short delay
+        setTimeout(() => setIsDisconnecting(false), 1000);
+      }
+    } else {
+      try {
+        await connect();
+      } catch (error) {
+        console.error('Error during connect:', error);
+      }
+    }
+  };
+
   return (
     <section className="control-tray">
-      <nav className={cn('actions-nav', { disabled: !connected })}>
+      <div className="premium-control-container">
         <button
-          className={cn('action-button mic-button')}
+          className={cn('premium-mic-button', { 
+            muted, 
+            connected,
+            'user-speaking': userVolume > 0.01,
+            'ready-to-talk': connected && !muted && userVolume === 0
+          })}
           onClick={() => setMuted(!muted)}
+          data-volume={userVolume}
+          title={muted ? 'Unmute Microphone' : 'Mute Microphone'}
         >
-          {!muted ? (
-            <span className="material-symbols-outlined filled">mic</span>
-          ) : (
-            <span className="material-symbols-outlined filled">mic_off</span>
-          )}
+          <span className="material-symbols-outlined">
+            {!muted ? 'mic' : 'mic_off'}
+          </span>
+          <div className="button-aura" />
         </button>
-        {children}
-      </nav>
 
-      <div className={cn('connection-container', { connected })}>
-        <div className="connection-button-container">
-          <button
-            ref={connectButtonRef}
-            className={cn('action-button connect-toggle', { connected })}
-            onClick={connected ? disconnect : connect}
-          >
-            <span className="material-symbols-outlined filled">
-              {connected ? 'pause' : 'play_arrow'}
-            </span>
-          </button>
-        </div>
-        <span className="text-indicator">Streaming</span>
+        <button
+          ref={connectButtonRef}
+          className={cn('premium-agent-button', { 
+            connected,
+            'agent-speaking': agentVolume > 0.05,
+            'disconnecting': isDisconnecting
+          })}
+          onClick={handleAgentToggle}
+          disabled={isDisconnecting}
+          data-volume={agentVolume}
+          title={isDisconnecting ? 'Stopping...' : (connected ? 'Stop Voice Agent' : 'Start Voice Agent')}
+        >
+          <span className="material-symbols-outlined">
+            {isDisconnecting ? 'hourglass_empty' : (connected ? 'face' : 'face_2')}
+          </span>
+          <div className="button-aura" />
+        </button>
       </div>
+      
+      {children}
     </section>
   );
 }

@@ -24,8 +24,9 @@ import ErrorScreen from './components/demo/ErrorSreen';
 import KeynoteCompanion from './components/demo/keynote-companion/KeynoteCompanion';
 import Header from './components/Header';
 import UserSettings from './components/UserSettings';
+import Dashboard from './components/Dashboard.tsx';
 import { LiveAPIProvider } from './contexts/LiveAPIContext';
-import { useUI, useUser } from './lib/state';
+import { useUI } from './lib/state';
 
 const API_KEY = process.env.GEMINI_API_KEY as string;
 if (typeof API_KEY !== 'string') {
@@ -41,21 +42,22 @@ if (typeof API_KEY !== 'string') {
 function App() {
   const { showUserConfig, showAgentEdit } = useUI();
   return (
-    <div className="App">
+    <div className="App real-estate-admin">
       <LiveAPIProvider apiKey={API_KEY}>
         <ErrorScreen />
         <Header />
 
         {showUserConfig && <UserSettings />}
         {showAgentEdit && <AgentEdit />}
-        <div className="streaming-console">
-          <main>
-            <div className="main-app-area">
+        
+        <div className="admin-layout">
+          <Dashboard />
+          <div className="main-content">
+            <div className="voice-agent-section">
               <KeynoteCompanion />
             </div>
-
-            <ControlTray></ControlTray>
-          </main>
+            <ControlTray />
+          </div>
         </div>
       </LiveAPIProvider>
     </div>

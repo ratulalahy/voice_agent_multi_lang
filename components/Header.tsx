@@ -34,19 +34,30 @@ export default function Header() {
   }
 
   return (
-    <header>
-      <div className="roomInfo">
-        <div className="roomName">
+    <header className="real-estate-header">
+      <div className="header-content">
+        <div className="brand-section">
+          <div className="brand-logo">🏠</div>
+          <div className="brand-info">
+            <h1 className="brand-title">Elite Realty</h1>
+            <p className="brand-subtitle">AI Voice Agent Platform</p>
+          </div>
+        </div>
+
+        <div className="agent-selector">
           <button
+            className="agent-dropdown-btn"
             onClick={e => {
               e.stopPropagation();
               setShowRoomList(!showRoomList);
             }}
           >
-            <h1 className={c({ active: showRoomList })}>
-              {current.name}
-              <span className="icon">arrow_drop_down</span>
-            </h1>
+            <span className="current-agent">
+              {current.name || 'Select Agent'}
+            </span>
+            <span className={`dropdown-icon ${showRoomList ? 'open' : ''}`}>
+              ⌄
+            </span>
           </button>
 
           <button
@@ -57,18 +68,19 @@ export default function Header() {
           </button>
         </div>
 
-        <div className={c('roomList', { active: showRoomList })}>
-          <div>
-            <h3>Presets</h3>
+        <div className={c('agent-dropdown', { active: showRoomList })}>
+          <div className="dropdown-section">
+            <h3>Real Estate Agents</h3>
             <ul>
               {availablePresets
                 .filter(agent => agent.id !== current.id)
                 .map(agent => (
-                  <li
-                    key={agent.name}
-                    className={c({ active: agent.id === current.id })}
-                  >
-                    <button onClick={() => changeAgent(agent)}>
+                  <li key={agent.name}>
+                    <button 
+                      className="agent-option"
+                      onClick={() => changeAgent(agent)}
+                    >
+                      <span className="agent-emoji">🏠</span>
                       {agent.name}
                     </button>
                   </li>
@@ -76,39 +88,55 @@ export default function Header() {
             </ul>
           </div>
 
-          <div>
-            <h3>Your ChatterBots</h3>
-            {
-              <ul>
-                {availablePersonal.length ? (
-                  availablePersonal.map(({ id, name }) => (
-                    <li key={name} className={c({ active: id === current.id })}>
-                      <button onClick={() => changeAgent(id)}>{name}</button>
-                    </li>
-                  ))
-                ) : (
-                  <p>None yet.</p>
-                )}
-              </ul>
-            }
+          <div className="dropdown-section">
+            <h3>Custom Agents</h3>
+            <ul>
+              {availablePersonal.length ? (
+                availablePersonal.map(({ id, name }) => (
+                  <li key={name}>
+                    <button 
+                      className="agent-option"
+                      onClick={() => changeAgent(id)}
+                    >
+                      <span className="agent-emoji">🤖</span>
+                      {name}
+                    </button>
+                  </li>
+                ))
+              ) : (
+                <p className="no-agents">No custom agents yet</p>
+              )}
+            </ul>
             <button
-              className="newRoomButton"
+              className="create-agent-btn"
               onClick={() => {
                 addNewChatterBot();
               }}
             >
-              <span className="icon">add</span>New ChatterBot
+              <span className="btn-icon">+</span>
+              Create New Agent
             </button>
           </div>
         </div>
       </div>
-      <button
-        className="userSettingsButton"
-        onClick={() => setShowUserConfig(!showUserConfig)}
-      >
-        {name || 'Your name'}
-        <span className="icon">tune</span>
-      </button>
+      
+      <div className="header-actions">
+        <button
+          className="header-btn secondary"
+          onClick={() => setShowAgentEdit(true)}
+        >
+          <span className="btn-icon">⚙️</span>
+          Edit Agent
+        </button>
+        
+        <button
+          className="header-btn primary"
+          onClick={() => setShowUserConfig(!showUserConfig)}
+        >
+          <span className="btn-icon">👤</span>
+          {name || 'Admin'}
+        </button>
+      </div>
     </header>
   );
 }

@@ -2,17 +2,15 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Modality } from '@google/genai';
 
-import BasicFace from '../basic-face/BasicFace';
 import { useLiveAPIContext } from '../../../contexts/LiveAPIContext';
 import { createSystemInstructions } from '@/lib/prompts';
 import { useAgent, useUser } from '@/lib/state';
 
 export default function KeynoteCompanion() {
   const { client, connected, setConfig } = useLiveAPIContext();
-  const faceCanvasRef = useRef<HTMLCanvasElement>(null);
   const user = useUser();
   const { current } = useAgent();
 
@@ -52,7 +50,7 @@ export default function KeynoteCompanion() {
 
   return (
     <div className="keynote-companion">
-      <BasicFace canvasRef={faceCanvasRef!} color={current.bodyColor} />
+      {/* Premium minimalist design - no animation box */}
     </div>
   );
 }
