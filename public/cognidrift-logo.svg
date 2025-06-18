@@ -1,0 +1,32 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <linearGradient id="logoGradient2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+  </defs>
+  <rect x="10" y="10" width="100" height="100" rx="10" fill="none" stroke="url(#logoGradient)" stroke-width="4" />
+  <path d="M60 100v-80M20 60h80" stroke="url(#logoGradient)" stroke-width="4" stroke-linecap="round" />
+  <path d="M40 80l40-40M80 80l-40-40" stroke="url(#logoGradient2)" stroke-width="4" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="113">
+    <animate attributeName="stroke-dashoffset" values="113;0" dur="1.5s" begin="0.5s" fill="freeze" />
+  </path>
+  
+  <style>
+    @keyframes progressUp {
+      0% {
+        stroke-dashoffset: 113;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    path[stroke-dasharray] {
+      animation: progressUp 1.5s ease-out forwards 0.5s;
+    }
+  </style>
+</svg>

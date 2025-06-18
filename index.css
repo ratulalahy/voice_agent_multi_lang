@@ -1821,6 +1821,75 @@ input[type='range'] {
   font-size: 1rem;
 }
 
+/* CogniDrift Logo and Header Styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.brand-link:hover {
+  transform: scale(1.02);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-svg {
+  width: 48px;
+  height: 48px;
+  display: block;
+}
+
+.logo-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  display: inline-block;
+}
+/* 
+.logo-text i {
+  font-style: italic;
+  opacity: 0.9;
+  font-weight: 700;
+} */
+
+.tagline {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: 0.025em;
+  max-width: 300px;
+}
+
 /* Responsive Design for Header */
 @media (max-width: 768px) {
   .header-content {

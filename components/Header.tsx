@@ -34,15 +34,15 @@ export default function Header() {
   }
 
   return (
-    <header className="real-estate-header">
+    <header className="header">
       <div className="header-content">
-        <div className="brand-section">
-          <div className="brand-logo">🏠</div>
-          <div className="brand-info">
-            <h1 className="brand-title">DataMindLabs</h1>
-            <p className="brand-subtitle">AI Voice Agent Platform</p>
+        <a href="https://cognidrift.com" target="_blank" rel="noopener noreferrer" className="brand-link">
+          <div className="logo">
+            <img src="/cognidrift-logo.svg" alt="CogniDrift Logo" className="logo-svg" />
           </div>
-        </div>
+          <h1 className="logo-text">Cogni<i>Drift</i></h1>
+          <p className="tagline">Engineering the future of AI-powered digital workforce transformation</p>
+        </a>
 
         <div className="agent-selector">
           <button
